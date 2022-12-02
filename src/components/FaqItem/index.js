@@ -1,40 +1,45 @@
 // Write your code here.
-
 import './index.css'
 
-const FaqItem = props => {
-  const {eachFaq, showAnswer, isAnswerShowed, isActiveFaq} = props
-  const {id, questionText, answerText} = eachFaq
+import {Component} from 'react'
 
-  const onClickShowAnswer = () => {
-    showAnswer(id)
+class FaqItem extends Component {
+  state = {isActive: false}
+
+  onClickShowAnswer = () => {
+    this.setState(prevState => ({
+      isActive: !prevState.isActive,
+    }))
   }
 
-  const altText = isAnswerShowed === false && isActiveFaq ? 'minus' : 'plus'
-  console.log(altText)
+  render() {
+    const {isActive} = this.state
+    const {eachFaq} = this.props
+    const {questionText, id, answerText} = eachFaq
+    const altText = isActive ? 'minus' : 'plus'
 
-  const imageUrl =
-    isAnswerShowed === false && isActiveFaq
+    const imageUrl = isActive
       ? 'https://assets.ccbp.in/frontend/react-js/faqs-minus-icon-img.png'
       : 'https://assets.ccbp.in/frontend/react-js/faqs-plus-icon-img.png'
 
-  return (
-    <li className="container">
-      <div className="faq-item-container">
-        <div className="faq">
-          <h1 className="faq-question">{questionText}</h1>
-          <button type="button" className="btn" onClick={onClickShowAnswer}>
-            <img src={imageUrl} alt={altText} className="faqs-icon" />
-          </button>
+    return (
+      <li className="container">
+        <div className="faq-item-container">
+          <div className="faq">
+            <h1 className="faq-question">{questionText}</h1>
+            <button
+              type="button"
+              className="btn"
+              onClick={this.onClickShowAnswer}
+            >
+              <img src={imageUrl} alt={altText} className="faqs-icon" />
+            </button>
+          </div>
+          {isActive && <p className="faq-answer">{answerText}</p>}
         </div>
-        {isAnswerShowed === false && isActiveFaq ? (
-          <p className="faq-answer">{answerText}</p>
-        ) : (
-          ''
-        )}
-      </div>
-    </li>
-  )
+      </li>
+    )
+  }
 }
 
 export default FaqItem
