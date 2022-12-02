@@ -1,5 +1,4 @@
 // Write your code here.
-
 import './index.css'
 
 import {Component} from 'react'
@@ -11,20 +10,11 @@ class Faqs extends Component {
     super(props)
     this.state = {
       faqsList: props.faqsList,
-      ActiveFaqId: -1,
-      isAnswerShowed: false,
     }
   }
 
-  showAnswer = id => {
-    this.setState(prevState => ({
-      isAnswerShowed: !prevState.isAnswerShowed,
-      ActiveFaqId: id,
-    }))
-  }
-
   render() {
-    const {faqsList, ActiveFaqId, isAnswerShowed} = this.state
+    const {faqsList} = this.state
 
     return (
       <div className="bg-container">
@@ -33,13 +23,7 @@ class Faqs extends Component {
 
           <ul className="un-ordered-list">
             {faqsList.map(eachFaq => (
-              <FaqItem
-                eachFaq={eachFaq}
-                key={eachFaq.id}
-                showAnswer={this.showAnswer}
-                isActiveFaq={ActiveFaqId === eachFaq.id}
-                isAnswerShowed={isAnswerShowed}
-              />
+              <FaqItem eachFaq={eachFaq} key={eachFaq.id} />
             ))}
           </ul>
         </div>
